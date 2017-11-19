@@ -1,0 +1,84 @@
+@startuml
+Main..Core
+
+Core -left>Logger
+Core -->ConsoleDrawer
+Core -down>ConfigureFactory
+Core o--Building
+Core o--Person
+Core o--Elevator
+ConfigureFactory--Configurator
+Configurator<|..BuildingConfigurator
+Configurator<|..PersonsConfigurator
+Configurator<|..ElevatorsConfigurator
+class Main{
+ Main()
+}
+class ConsoleDrawer{
+ void Draw(Building building, List<Elevator> elevators, List<Person> persons,Logger log)
+}
+class Elevator{
+int  carringCapacity
+int capacity
+int targetFloor
+int currentFloor
+int stepsToNextFloor
+boolean calculateCapacity()
+void move()
+void stop()
+void draw()
+}
+class Person{
+int weight
+int currentFloor
+int targetFloor
+void enter()
+void goOut()
+void draw()
+}
+class Building{
+int numberOfFloors
+int NumberOfElevators
+void draw()
+}
+class Core{
+Building building
+List<Person> persons
+List<Elevator> elevators
+List<Configurator> configurators
+ConfigureFactoty configFactory
+Logger log
+Drawer drawer
+void start()
+void step()
+
+}
+class Logger{
+void printLog(Building building,List<Person> persons,List<Elevator> elevators)
+void printLogBuilding()
+void printLogPersons()
+void printLogElevators()
+)
+}
+interface Configurator{
+}
+class BuildingConfigurator{
+setNubmerOfFloors()
+setNumberOfElevators()
+}
+class PersonsConfigurator{
+Map<int,int> direction
+setDirecton()
+setNumberOfPersons(Map <int,int> direction)
+}
+class ElevatorsConfigurator{
+List<Elevator>  elevators
+configureElevators()
+setCarringCapacity()
+setcapacity()
+}
+class ConfigureFactory{
+List<Configurator> configurators
+getConfigurators()
+}
+@enduml
