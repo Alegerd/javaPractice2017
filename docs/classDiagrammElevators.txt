@@ -3,35 +3,51 @@ Main..Core
 
 Core -left>Logger
 Core -->ConsoleDrawer
-Core -down>ConfigureFactory
+Core -->ConfigureFactory
 Core o--Building
-Core o--Person
-Core o--Elevator
 ConfigureFactory--Configurator
 Configurator<|..BuildingConfigurator
 Configurator<|..PersonsConfigurator
 Configurator<|..ElevatorsConfigurator
+Drawable<|..Person
+Drawable<|..Building
+Drawable<|..Elevator
+Drawable<|.. Logger
+Alterable<|..Elevator
+Alterable<|..Person
+Alterable<|..Floor
+Core *--Alterable
+Floor--o Person
+Floor --o Elevator
+Person--o Elevator
+Person-->Direction
+Elevator-->Direction
 class Main{
  Main()
 }
 class ConsoleDrawer{
- void Draw(Building building, List<Elevator> elevators, List<Person> persons,Logger log)
+ void draw(Building building, List<Elevator> elevators, List<Person> persons,Logger log)
 }
 class Elevator{
+List<Person> persons
+Direction direction
 int  carringCapacity
 int capacity
 int targetFloor
 int currentFloor
 int stepsToNextFloor
 boolean calculateCapacity()
+void step()
 void move()
 void stop()
 void draw()
 }
 class Person{
+Direction direction
 int weight
 int currentFloor
 int targetFloor
+void step()
 void enter()
 void goOut()
 void draw()
@@ -42,16 +58,14 @@ int NumberOfElevators
 void draw()
 }
 class Core{
+List <Alterable> items
 Building building
-List<Person> persons
-List<Elevator> elevators
-List<Configurator> configurators
 ConfigureFactoty configFactory
 Logger log
 Drawer drawer
 void start()
 void step()
-
+void draw()
 }
 class Logger{
 void printLog(Building building,List<Person> persons,List<Elevator> elevators)
@@ -80,5 +94,22 @@ setcapacity()
 class ConfigureFactory{
 List<Configurator> configurators
 getConfigurators()
+}
+class Floor{
+List<Persons> persons
+List<Elevators> elevators
+void enterPersonsIntoElevator()
+step()
+}
+interface Drawable{
+draw()
+}
+interface Alterable{
+step()
+}
+
+enum Direction{
+up
+down
 }
 @enduml
